@@ -47,12 +47,17 @@ const loadData = async ()=>{
 // CARD LOADING HOME PAGE
 
 function loadCard(datas) {
-    homePage.innerHTML =""
+    homePage.innerHTML =`
+    <div class="col-12 text-center">
+        <h2 class="font-weight-light">Catalogue</h2>
+        <hr>
+    </div>
+    `
     datas.forEach(elem => {
         homePage.innerHTML +=`
     <div class="col-6 col-md-3 my-2">
         <div class="card h-100">
-            <img src="${elem.imageUrl}" class="card-img-top" alt="...">
+            <img src="${elem.imageUrl}" class="card-img-top mt-1" style="max-height: 15rem;   object-fit: contain;" alt="...">
             <div class="card-body">
                 <h5 class="card-title">${elem.name}</h5>
                 <p class="card-text">${elem.brand}</p>
@@ -100,6 +105,11 @@ const submitData = async(event)=>{
             alert("Added to catalouge. ID: " + respEvent._id)
 
             itemList()
+            document.getElementById('name').value=''
+            document.getElementById('brand').value=''
+            document.getElementById('description').value=''
+            document.getElementById('imageUrl').value=''
+            document.getElementById('price').value=''
         } else {
             if (response.status >= 400 && response.status < 500) {
                 throw new Error("User generated error, verify the data that you are sending!")

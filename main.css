@@ -27,3 +27,7 @@ padding: 0;
     background-color: white;
     color: black
 }
+.active {
+    background-color: white;
+    color: black;
+}
