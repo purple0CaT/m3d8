@@ -102,8 +102,9 @@ const submitData = async(event)=>{
 
         if (response.ok) {
             const respEvent = await response.json()
-            alert("Added to catalouge. ID: " + respEvent._id)
+            alert(respEvent.name+" added to catalouge.")
 
+            loadData()
             itemList()
             document.getElementById('name').value=''
             document.getElementById('brand').value=''
@@ -148,7 +149,8 @@ const deleteItem = async(val)=>{
                 "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTFjZjcwZDJkNTI2MjAwMTViNmRjOTkiLCJpYXQiOjE2MjkyODgyMDUsImV4cCI6MTYzMDQ5NzgwNX0.jHNmjWp6j4MxM-iiSgDtKjZAZdf8sa1Xpvjsm8l4wuc"
             }
         })
-        alert(`Item deleted`)
+        const respEvent = await response.json()
+        alert(respEvent.name + ` deleted`)
         loadData()
     } catch (err) {
         console.log(err);
