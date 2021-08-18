@@ -12,12 +12,18 @@ function home(){
 function post() {
     homePage.classList.add('d-none')
     backPage.classList.remove('d-none')
+    itemList()
 }
+
+
+
+
 // OnLOAD
 window.onload = ()=>{
     loadData()
 }
 
+// DATA LOAD
 const loadData = async ()=>{
     try {
         let response = await fetch(url, {
@@ -31,6 +37,7 @@ const loadData = async ()=>{
         dataBase = data
 
         loadCard(dataBase)
+        itemList()
     } catch (err) {
         console.log(err);
     }
@@ -68,10 +75,8 @@ let postData = {
     price: `${document.getElementById('price').value}`
 }
 
-
 // POST FUNCTION
 const submit = async(event)=>{
-    event.preventDefault()
 
     let postData = {
         name: document.getElementById('name').value,
@@ -80,7 +85,6 @@ const submit = async(event)=>{
         imageUrl: document.getElementById('imageUrl').value,
         price: document.getElementById('price').value
     }
-
     try {
         let response = await fetch(url, {
             method: 'POST',
@@ -104,3 +108,34 @@ const submit = async(event)=>{
         console.log(err);
     }
 };
+
+
+// create all catalogue
+
+function itemList() {
+    let allItems = document.getElementById('allItems')
+
+    allItems.innerHTML=''
+    dataBase.forEach(item => {
+        allItems.innerHTML += `
+        <div class="col-12 mb-1 d-flex justify-content-between align-items-center">
+            <p class="m-0 p-0">${item.name}</p>
+            <button class="btn btn-danger" value=${item._id} onclick="deleteItem(this.value)">Delete</button>
+        </div>
+        `
+    })
+}
+
+
+const deleteItem = async(val)=>{
+    try {
+        let response = await fetch(url+val, {
+            method: 'DELETE',
+            headers: {
+                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTFjZjcwZDJkNTI2MjAwMTViNmRjOTkiLCJpYXQiOjE2MjkyODgyMDUsImV4cCI6MTYzMDQ5NzgwNX0.jHNmjWp6j4MxM-iiSgDtKjZAZdf8sa1Xpvjsm8l4wuc"
+            }
+        })
+    } catch (err) {
+        console.log(err);
+    }
+}
