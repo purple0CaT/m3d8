@@ -63,11 +63,11 @@
 
     <!-- input -->
     <div class="row d-none" id="backOffice">
-            <div class="col-4">
+        <div class="col-4">
                 <h3 class="font-weight-light text-center">Add item to catalogue</h3>
                 <hr>
-            <form onsubmit="submit()">
-                <div class="form-group">
+                <form onsubmit="submitData(event)">
+                    <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" class="form-control" id="name" placeholder="...name" required>
                 </div>
@@ -87,6 +87,7 @@
                     <label for="price">Name</label>
                     <input type="number" class="form-control" id="price" placeholder="...price" required>
                 </div>
+                <hr>
                 <button type="submit" class="btn btn-secondary">Submit</button>
             </form>
         </div>
@@ -94,7 +95,7 @@
         <div class="col-4"></div>
         <!-- right col -->
         <div class="col-4">
-            <h3 class="font-weight-light text-center">Our catalogue</h3>
+            <h3 class="font-weight-light text-center">Catalogue</h3>
             <hr>
             <div class="row" id="allItems">
                 <!-- ALL ITEMS -->

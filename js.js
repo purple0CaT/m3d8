@@ -50,14 +50,14 @@ function loadCard(datas) {
     homePage.innerHTML =""
     datas.forEach(elem => {
         homePage.innerHTML +=`
-    <div class="col-6 col-md-3">
+    <div class="col-6 col-md-3 my-2">
         <div class="card h-100">
             <img src="${elem.imageUrl}" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">${elem.name}</h5>
                 <p class="card-text">${elem.brand}</p>
                 <p class="card-text">${elem.description}</p>
-                <strong class="card-text">${elem.price}</strong>
+                <strong class="card-text">${elem.price} £</strong>
                 </div>
                 <a href="#" class="btn btn-light">Buy</a>
         </div>
@@ -76,8 +76,8 @@ let postData = {
 }
 
 // POST FUNCTION
-const submit = async(event)=>{
-
+const submitData = async(event)=>{
+    event.preventDefault()
     let postData = {
         name: document.getElementById('name').value,
         brand: document.getElementById('brand').value,
@@ -94,9 +94,12 @@ const submit = async(event)=>{
                 "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTFjZjcwZDJkNTI2MjAwMTViNmRjOTkiLCJpYXQiOjE2MjkyODgyMDUsImV4cCI6MTYzMDQ5NzgwNX0.jHNmjWp6j4MxM-iiSgDtKjZAZdf8sa1Xpvjsm8l4wuc"
             }
         })
+
         if (response.ok) {
             const respEvent = await response.json()
-            alert("Appointment created successfully with an id of " + respEvent._id)
+            alert("Added to catalouge. ID: " + respEvent._id)
+
+            itemList()
         } else {
             if (response.status >= 400 && response.status < 500) {
                 throw new Error("User generated error, verify the data that you are sending!")
@@ -135,6 +138,8 @@ const deleteItem = async(val)=>{
                 "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTFjZjcwZDJkNTI2MjAwMTViNmRjOTkiLCJpYXQiOjE2MjkyODgyMDUsImV4cCI6MTYzMDQ5NzgwNX0.jHNmjWp6j4MxM-iiSgDtKjZAZdf8sa1Xpvjsm8l4wuc"
             }
         })
+        alert(`Item deleted`)
+        loadData()
     } catch (err) {
         console.log(err);
     }
