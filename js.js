@@ -7,6 +7,7 @@ let backPage = document.getElementById('backOffice')
 function home(){
     homePage.classList.remove('d-none')
     backPage.classList.add('d-none')
+    loadData()
 }
 function post() {
     homePage.classList.add('d-none')
@@ -57,3 +58,49 @@ function loadCard(datas) {
         `
     });
 }
+
+// POST DATA
+let postData = {
+    name: `${document.getElementById('name').value}`,
+    brand: `${document.getElementById('brand').value}`,
+    description: `${document.getElementById('description').value}`,
+    imageUrl: `${document.getElementById('imageUrl').value}`,
+    price: `${document.getElementById('price').value}`
+}
+
+
+// POST FUNCTION
+const submit = async(event)=>{
+    event.preventDefault()
+
+    let postData = {
+        name: document.getElementById('name').value,
+        brand: document.getElementById('brand').value,
+        description: document.getElementById('description').value,
+        imageUrl: document.getElementById('imageUrl').value,
+        price: document.getElementById('price').value
+    }
+
+    try {
+        let response = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(postData),
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTFjZjcwZDJkNTI2MjAwMTViNmRjOTkiLCJpYXQiOjE2MjkyODgyMDUsImV4cCI6MTYzMDQ5NzgwNX0.jHNmjWp6j4MxM-iiSgDtKjZAZdf8sa1Xpvjsm8l4wuc"
+            }
+        })
+        if (response.ok) {
+            const respEvent = await response.json()
+            alert("Appointment created successfully with an id of " + respEvent._id)
+        } else {
+            if (response.status >= 400 && response.status < 500) {
+                throw new Error("User generated error, verify the data that you are sending!")
+            } else if (response.status >= 500 && response.status < 600) {
+                throw new Error("Server generated error, contact the admin to fix this problem.")
+            }
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
